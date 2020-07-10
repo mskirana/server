@@ -19,16 +19,18 @@
     "url": "https://github.com/mskirana/server/issues"
   },
   "homepage": "https://github.com/mskirana/server#readme",
-  "type":"module",
+  "type": "module",
   "husky": {
     "pre-commit": "npm test"
   },
   "dependencies": {
     "connect-mongo": "3.2.0",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "1.17.0",
     "mongoose": "^5.7.5",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "eslint": "^7.4.0",

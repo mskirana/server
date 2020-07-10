@@ -9,5 +9,11 @@
     },
     "env": {
         "node": true
+    },
+    "rules": {
+        "semi": [2, "never"],
+        "sort-imports": ["error", {
+            "memberSyntaxSortOrder": ["none", "multiple", "all", "single"]
+        }]
     }
 }

@@ -1,17 +1,18 @@
-import express from 'express'
-import morgan from 'morgan'
 import config from './config.js'
+import express from 'express'
+import loaders from './loaders/index.js'
+import logger from './loaders/logger.js'
 
 const app = express()
-app.use(express.json({limit: "5mb"}))
-app.use(express.urlencoded({ limit: "5mb", extended: false }))
 
-if (config.env !== 'test') {
-    app.use(morgan("dev"))
-}
+// load the server
+loaders(app)
 
-app.get('/', (_, res) => res.send('Hello, world!'))
-
-app.listen(config.port, config.host, () => {
-    console.log(`MsKirana server listening at ${config.host}:${config.port}`)
+app.listen(config.server.port, config.server.host, (err) => {
+    if (err) {
+        logger.error(err)
+        process.exit(1)
+    } else {
+        logger.info(`[app] mskirana server listening at ${config.server.host}:${config.server.port}`)
+    }
 })
