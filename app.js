@@ -5,7 +5,7 @@ import logger from './loaders/logger.js'
 
 const app = express()
 
-// load the server
+// load all the components
 loaders(app)
 
 app.listen(config.server.port, config.server.host, (err) => {
