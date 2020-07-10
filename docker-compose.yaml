@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  web:
+    image: mskirana/server:latest
+    container_name: mskirana_server
+    depends_on:
+      - mongo
+    restart: always
+    env_file: .env
+    environment:
+      MONGO_HOSTNAME: mongo
+      MONGO_PORT: 27017
+      NODE_ENV: production
+    command: ["scripts/wait-for-it.sh", "mongo:27017", "--", "scripts/startup.sh"]
+    ports:
+      - $SERVER_PORT:8080
+  mongo:
+    image: mongo:4.2.3
+    container_name: mskirana_mongo
+    restart: always
+    env_file: .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_USERNAME
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_PASSWORD
+      MONGO_INITDB_DATABASE: $MONGO_DB
+    volumes:
+      - dbdata:/data/db
+volumes:
+  dbdata:
