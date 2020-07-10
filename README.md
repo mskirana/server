@@ -16,6 +16,7 @@ MONGO_DB=mskirana
 
 MONGO_EXPRESS_USERNAME=root
 MONGO_EXPRESS_PASSWORD=password
+MONGO_EXPRESS_PORT=8081
 EOF
 ```
 
@@ -23,3 +24,5 @@ To start the development server,
 ```sh
 $ docker-compose -f docker-compose.yaml -f dev.docker-compose.yaml up
 ```
+
+Web server will be available at $SERVER_PORT and Mongo-Express will be available at $MONGO_EXPRESS_PORT
