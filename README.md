@@ -1,5 +1,7 @@
 # Web Server for mskirana
 
+![Deploy](https://github.com/mskirana/server/workflows/Deploy/badge.svg?branch=master)
+
 ## Getting started
 
 1. Install docker and docker-compose.
