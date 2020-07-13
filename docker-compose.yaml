@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   web:
-    image: mskirana/server:latest
+    image: shubham1172/mskirana:master
     container_name: mskirana_server
     depends_on:
       - mongo
