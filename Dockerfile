@@ -7,6 +7,9 @@ RUN apk add --update netcat-openbsd && rm -rf /var/cache/apk/*
 
 COPY . .
 
+# Make the scripts executable
+RUN chmod -R +x /app/scripts/*
+
 RUN npm install --only=production
 
 EXPOSE 8080
