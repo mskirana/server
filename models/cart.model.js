@@ -1,15 +1,15 @@
-import {Schema, model} from 'mongoose'
-import ProductSchema from './product.model.js'
+import Product from './product.model.js'
+import mongoose from 'mongoose'
 
 /**
  * CartSchema defines a cart for a user
  * Note: in this mock app, we only have one user
  */
-var CartSchema = new Schema({
+const CartSchema = new mongoose.Schema({
     products: {
-        type: [ProductSchema],
+        type: [Product],
         required: true
     }
 })
 
-export default model('Cart', CartSchema)
+export default mongoose.model('Cart', CartSchema)

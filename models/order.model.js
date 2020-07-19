@@ -1,19 +1,19 @@
-import {Schema, model} from 'mongoose'
-import ProductSchema from './product.model.js'
+import Product from './product.model.js'
+import mongoose from 'mongoose'
 
 /**
  * OrderSchema defines an order in the application
  */
-var OrderSchema = new Schema({
+const OrderSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['placed', 'review', 'accepted', 'rejected', 'delivered'],
         required: true
     },
     products: {
-        type: [ProductSchema],
+        type: [Product.schema],
         required: true
     }
 })
 
-export default model('Order', OrderSchema)
+export default mongoose.model('Order', OrderSchema)

@@ -1,42 +1,34 @@
-import {Schema, model} from 'mongoose'
-import CategorySchema from './category.model.js'
+import mongoose from 'mongoose'
 
 /**
  * ProductSchema defines a product in the inventory
  */
-var ProductSchema = new Schema({
+var ProductSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        minlength: 5,
         maxlength: 50
-    },
-    summary: {
-        type: String,
-        required: true,
-        minlength: 20,
-        maxlength: 200
     },
     price: {
         type: Number,
-        required: true,
-        min: 0
-    },
-    discount: {
-        type: Number,
         required: false,
-        min: 0,
-        max: 100
+        min: 0
     },
     quantity: {
-        type: Number,
+        type: String,
         required: true,
         min: 0
     },
-    categories: {
-        type: [CategorySchema],
-        required: true
+    remarks: {
+        type: String,
+        required: false,
+        minlength: 0,
+        maxlength: 200
+    },
+    available: {
+        type: Boolean,
+        required: false,
     }
 })
 
-export default model('Product', ProductSchema)
+export default mongoose.model('Product', ProductSchema)
