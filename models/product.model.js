@@ -27,7 +27,7 @@ var ProductSchema = new mongoose.Schema({
     },
     available: {
         type: Boolean,
-        required: false,
+        required: false
     }
 })
 
