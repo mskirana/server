@@ -47,7 +47,7 @@ router.get('/:orderId', (req, res) => {
  * Verify an order
  * 
  */
-router.post('/:orderId', (req, res) => {
+router.post('/:orderId/verify', (req, res) => {
     const orderId = req.params.orderId
     const products = req.body
     
@@ -64,7 +64,57 @@ router.post('/:orderId', (req, res) => {
         })
     }).catch((err) => {
         res.status(500).json({
-            message: `Error placing order. ${err}`
+            message: `Error verifying order. ${err}`
+        })
+    })
+})
+
+/**
+ * Edit an order
+ */
+router.post('/:orderId/edit', (req, res) => {
+    const orderId = req.params.orderId
+    const products = req.body
+
+    if (!mongoose.Types.ObjectId.isValid(orderId)) {
+        return res.status(400).json({
+            message: "Bad request, orderId is not valid"
+        })
+    }
+
+    orderService.EditOrder(orderId, products).then(() => {
+        res.status(200).json({
+            id: orderId,
+            message: "Order successfully edited!"
+        })
+    }).catch((err) => {
+        res.status(500).json({
+            message: `Error editing order. ${err}`
+        })
+    })
+})
+
+/**
+ * Change the status of an order, 
+ */
+router.put('/:orderId/:status(accept|reject|deliver)', (req, res) => {
+    const orderId = req.params.orderId
+    const status = req.params.status + "ed"
+
+    if (!mongoose.Types.ObjectId.isValid(orderId)) {
+        return res.status(400).json({
+            message: "Bad request, orderId is not valid"
+        })
+    }
+
+    orderService.UpdateStatus(orderId, status).then(() => {
+        res.status(200).json({
+            id: orderId,
+            message: `Order successfully ${status}`
+        })
+    }).catch((err) => {
+        res.status(500).json({
+            message: `Error updating status for order. ${err}`
         })
     })
 })
