@@ -8,16 +8,30 @@ const router = express.Router()
  * Place a new order
  */
 router.post('/', (req, res)  => {
-    const products = req.body
+    const products = req.body.products
+    const remarks = req.body.remarks || ""
 
-    orderService.CreateOrder(products).then((id) => {
+    orderService.CreateOrder(products, remarks).then((order) => {
         res.status(200).json({
-            id: id,
+            order: order,
             message: "Order successfully created!"
         })
     }).catch((err) => {
         res.status(500).json({
             message: `Error placing order. ${err}`
+        })
+    })
+})
+
+/**
+ * Get all orders
+ */
+router.get('/', (req, res) => {
+    orderService.GetOrders().then((orders) => {
+        res.status(200).json(orders)
+    }).catch((err) => {
+        res.status(500).json({
+            message: `Error getting orders. ${err}`
         })
     })
 })
@@ -49,7 +63,8 @@ router.get('/:orderId', (req, res) => {
  */
 router.post('/:orderId/verify', (req, res) => {
     const orderId = req.params.orderId
-    const products = req.body
+    const products = req.body.products
+    const remarks = req.body.remarks || ""
     
     if (!mongoose.Types.ObjectId.isValid(orderId)) {
         return res.status(400).json({
@@ -57,7 +72,7 @@ router.post('/:orderId/verify', (req, res) => {
         })
     }
 
-    orderService.VerifyOrder(orderId, products).then(() => {
+    orderService.VerifyOrder(orderId, products, remarks).then(() => {
         res.status(200).json({
             id: orderId,
             message: "Order successfully verified!"
@@ -74,7 +89,8 @@ router.post('/:orderId/verify', (req, res) => {
  */
 router.post('/:orderId/edit', (req, res) => {
     const orderId = req.params.orderId
-    const products = req.body
+    const products = req.body.products
+    const remarks = req.body.remarks || ""
 
     if (!mongoose.Types.ObjectId.isValid(orderId)) {
         return res.status(400).json({
@@ -82,7 +98,7 @@ router.post('/:orderId/edit', (req, res) => {
         })
     }
 
-    orderService.EditOrder(orderId, products).then(() => {
+    orderService.EditOrder(orderId, products, remarks).then(() => {
         res.status(200).json({
             id: orderId,
             message: "Order successfully edited!"

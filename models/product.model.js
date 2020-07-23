@@ -19,12 +19,6 @@ var ProductSchema = new mongoose.Schema({
         required: true,
         min: 0
     },
-    remarks: {
-        type: String,
-        required: false,
-        minlength: 0,
-        maxlength: 200
-    },
     available: {
         type: Boolean,
         required: false

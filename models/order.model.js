@@ -10,6 +10,12 @@ const OrderSchema = new mongoose.Schema({
         enum: ['placed', 'review', 'accepted', 'rejected', 'delivered'],
         required: true
     },
+    remarks: {
+        type: String,
+        required: false,
+        minlength: 0,
+        maxlength: 200
+    },
     products: {
         type: [Product.schema],
         required: true
