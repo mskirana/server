@@ -116,8 +116,8 @@ export default class OrderService {
             throw new Error("Cannot find the order")
 
         if (status === "accepted") {
-            if (order.status !== "placed")
-                throw new Error("Only placed orders can be accepted")
+            if (order.status !== "review")
+                throw new Error("Only review orders can be accepted")
         } else if (status === "rejected") {
             if (!["review", "placed"].includes(order.status))
                 throw new Error("Only orders that are placed or under review can be rejected")
