@@ -6,21 +6,22 @@ export default class OrderService {
     /**
      * Creates a new order that user sends
      * @param {*} products 
+     * @param {*} remarks
      */
-    static async CreateOrder(products) {
+    static async CreateOrder(products, remarks) {
         var productArr = []
         products.forEach(product => {
             productArr.push(new Product({
                 title: product.title,
                 quantity: product.quantity,
-                remarks: product.remarks,
             }))
         })
 
         // initial state
         const order = new Order({
             status: 'placed',
-            products: productArr
+            products: productArr,
+            remarks: remarks
         })
 
         return await order.save()
@@ -35,11 +36,19 @@ export default class OrderService {
     }
 
     /**
+     * Get all orders
+     */
+    static async GetOrders() {
+        return await Order.find({})
+    }
+
+    /**
      * Used by shopkeeper to verify an order
      * @param {*} orderId 
      * @param {*} products
+     * @param {*} remarks
      */
-    static async VerifyOrder(orderId, products) {
+    static async VerifyOrder(orderId, products, remarks) {
         var order = await this.GetOrder(orderId)
         
         if (order === null)
@@ -54,7 +63,6 @@ export default class OrderService {
                 title: product.title,
                 quantity: product.quantity,
                 price: product.price,
-                remarks: product.remarks,
                 available: product.available
             }))
         })
@@ -62,6 +70,7 @@ export default class OrderService {
         // update the order
         order.status = 'review'
         order.products = productArr
+        order.remarks = remarks
 
         return await order.save()
     }
@@ -70,8 +79,9 @@ export default class OrderService {
      * Used by user to edit a order under 'review'
      * @param {*} orderId 
      * @param {*} products 
+     * @param {*} remarks
      */
-    static async EditOrder(orderId, products) {
+    static async EditOrder(orderId, products, remarks) {
         var order = await this.GetOrder(orderId)
 
         if (order === null)
@@ -85,7 +95,6 @@ export default class OrderService {
             var p = Product({
                 title: product.title,
                 quantity: product.quantity,
-                remarks: product.remarks,
             })
 
             var match = order.products.find(o => o.title == product.title)
@@ -100,6 +109,7 @@ export default class OrderService {
         // update the order
         order.status = 'placed'
         order.products = productArr
+        order.remarks = remarks
 
         return await order.save()
     }
